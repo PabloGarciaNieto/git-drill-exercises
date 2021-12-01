@@ -1,0 +1,111 @@
+-----------------View the Contents of the Staging Area-------------------
+
+git ls-files -s
+100644 76863676e0602467af023fe3e9b11f446baadcce 0       Exercise2-StagingAndStashing.md
+100644 ce8a13cbc38274167461572542721edf62f9cf7f 0       README.md
+100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       src/secont.txt
+
+------------------------------------------------
+
+git add -p
+diff --git a/src/secont.txt b/src/secont.txt
+index e69de29..72f8425 100644
+--- a/src/secont.txt
++++ b/src/secont.txt
+@@ -0,0 +1,8 @@
++-----------------View the Contents of the Staging Area-------------------
++
++git ls-files -s
++100644 76863676e0602467af023fe3e9b11f446baadcce 0       Exercise2-StagingAndStashing.md
++100644 ce8a13cbc38274167461572542721edf62f9cf7f 0       README.md
++100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       src/secont.txt
++
++-----------------------Interactive Staging-------------------------
+
+\ No newline at end of file
+(1/1) Stage this hunk [y,n,q,a,d,e,?]? ?
+y - stage this hunk
+n - do not stage this hunk
+q - quit; do not stage this hunk or any of the remaining ones
+a - stage this hunk and all later hunks in the file
+d - do not stage this hunk or any of the later hunks in the file
+e - manually edit the current hunk
+? - print help
+@@ -0,0 +1,8 @@
++
++git ls-files -s
++100644 76863676e0602467af023fe3e9b11f446baadcce 0       Exercise2-StagingAndStashing.md
++100644 ce8a13cbc38274167461572542721edf62f9cf7f 0       README.md
++100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       src/secont.txt
++
+(1/1) Stage this hunk [y,n,q,a,d,e,?]? y
+<stdin>:6: trailing whitespace.
+<stdin>:7: trailing whitespace.
+
+<stdin>:8: trailing whitespace.
+git ls-files -s
+<stdin>:9: trailing whitespace.
+100644 76863676e0602467af023fe3e9b11f446baadcce 0       Exercise2-StagingAndStashing.md
+<stdin>:10: trailing whitespace.
+100644 ce8a13cbc38274167461572542721edf62f9cf7f 0       README.md
+
+git status
+On branch exercise2
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   src/secont.txt
+
+git ls-files -s
+100644 76863676e0602467af023fe3e9b11f446baadcce 0       Exercise2-StagingAndStashing.md
+100644 ce8a13cbc38274167461572542721edf62f9cf7f 0       README.md
+100644 72f84251877a086e358fc03a5fb7a2f303ff9366 0       src/secont.txt
+
+before src/second.txt has the SHA1 e69de29
+now is 72f842
+
+-----------------Unstage your Change--------------------
+
+git reset src/secont.txt
+Unstaged changes after reset:
+M       src/secont.txt   
+
+git status
+On branch exercise2
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   src/secont.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+----------------Stash your Changes-----------------
+git stash save --include-untracked
+Saved working directory and index state WIP on exercise2: a178077 add exercise2 statement
+
+git status
+On branch exercise2
+nothing to commit, working tree clean
+
+git stash list
+stash@{0}: WIP on exercise2: a178077 add exercise2 statemen
+
+git stash show
+ src/secont.txt | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
+
+git stash apply stash@`{0`} 
+On branch exercise2
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   src/secont.txt
+
+no changes added to commit (use "git add" and/or "git commit -a") 
+
+git diff src/secont.txt
+diff --git a/src/secont.txt b/src/secont.txt
+index e69de29..af0e4c8 100644
+--- a/src/secont.txt
++++ b/src/secont.txt
+@@ -0,0 +1,64 @@
+
