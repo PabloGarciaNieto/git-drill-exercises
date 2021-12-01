@@ -1,9 +1,9 @@
 Hello World!
-------------------------
+
+----------View the .git Folder--------------
+
 tree .git
-Listado de rutas de carpetas para el volumen Windows 
-El número de serie del volumen es 0000000F F4D3:4F9C
-C:\USERS\PGNIETO\DESKTOP\GIT-DRILL\.GIT
+\GIT-DRILL\.GIT
 ├───hooks
 ├───info
 ├───logs
@@ -25,3 +25,68 @@ C:\USERS\PGNIETO\DESKTOP\GIT-DRILL\.GIT
 └───refs
     ├───heads
     └───tags
+
+    ----------View the .git/objects--------------
+
+tree .git/objects
+\GIT-DRILL\.GIT\OBJECTS
+├───02
+├───30
+├───31
+├───59
+├───5d
+├───75
+├───8b
+├───92
+├───ae
+├───bf
+├───c5
+├───ce
+├───d6
+├───info
+└───pack
+
+----------------Inspect the objects----------------------
+
+git cat-file -t ae56b47
+commit
+
+git cat-file -p ae56b47
+tree 31dbef296f3d892e38baca42646169f492cda68d
+parent 598182ae3751322959e934c2bd5080ef5f62d9b6
+author pablo <> 1638351900 +0100   
+committer pablo <> 1638351900 +0100
+
+git cat-file -t 31dbef29
+tree 
+
+git cat-file -p 31dbef29
+100644 blob 9257303fcee986af54245189eae8b6d174e0c684    Exercise1-SimpleCommit.md
+100644 blob ce8a13cbc38274167461572542721edf62f9cf7f    README.md
+040000 tree 75491d09d8e2bd68bde38ad91e9f1e4d541ca6e9    src
+
+git cat-file -t 75491d0
+tree
+
+git cat-file -p 75491d0
+100644 blob c57eff55ebc0c54973903af5f72bac72762cf4f4    first.txt
+
+git cat-file -t c57eff5
+blob
+
+git cat-file -p c57eff5
+Hello World!
+
+----------------Look at refs--------------------
+
+cat .git/HEAD
+ref: refs/heads/exercise1
+
+cat .git/refs/heads/exercise1
+59d83ac05065c7c40844b6ee005936df29b2206f
+
+git log --oneline
+59d83ac (HEAD -> exercise1) inspect git folder
+ae56b47 add first.txt file to the repo
+598182a exercise1 statement
+d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
