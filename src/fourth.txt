@@ -1,0 +1,53 @@
+----------------Merging skipping fast forward----------------
+
+git merge --no-ff exercise3
+Merge made by the 'recursive' strategy.
+ Exercise3-References.md | 187 ++++++++++++++++++++++++++++++++++++++++++++++++
+ src/third.txt           | 142 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 329 insertions(+)
+ create mode 100644 Exercise3-References.md
+ create mode 100644 src/third.txt
+
+git log --graph
+*   commit b6978b49735ce076f6de1960234eb8ebc0eff27a (HEAD -> exercise4)
+|\  Merge: 83fc95f 40e9c24
+| | Author: pablo <pgnieto@paradigmadigital.com>
+| | Date:   Wed Dec 1 13:32:30 2021 +0100
+| |
+| |     Merge branch 'exercise3' into exercise4
+| |
+| * commit 40e9c24e5a8d1fe0d618d6fefb97c783cc8c051e (exercise3)
+| | Author: pablo <pgnieto@paradigmadigital.com>
+| | Date:   Wed Dec 1 13:22:03 2021 +0100
+| |
+| |     third exercise completed
+| |
+| * commit 7f71c3db250cc2bff6d2209ddfb8816c374a54ee
+| | Author: pablo <pgnieto@paradigmadigital.com>
+| | Date:   Wed Dec 1 13:10:59 2021 +0100
+| |
+| |     exercise3 after detached HEAD
+| |
+| * commit 0cc37fcbe6d3b060522822b696051a364debe940
+| | Author: pablo <pgnieto@paradigmadigital.com>
+| | Date:   Wed Dec 1 12:49:49 2021 +0100
+| |
+| |     exercise3 before detached HEAD
+| |
+| * commit 16805615d37c4795bf4ec1f4a4001bf2d6142955 (tag: exercise3-lightweight-tag, tag: exercise3-annotated-tag)
+| | Author: pablo <pgnieto@paradigmadigital.com>
+| | Date:   Wed Dec 1 12:19:21 2021 +0100
+| |
+| |     third exercise statement
+| |
+* | commit 83fc95f4749a22dfd3524d93873c13f633797d3a
+|/  Author: pablo <pgnieto@paradigmadigital.com>
+|   Date:   Wed Dec 1 13:31:21 2021 +0100
+|
+|       add fourth exercise statement
+|
+* commit d6d711756d12e5076aae8ae488f32181b553095a (master)
+
+-------------------Setting up for conflict---------------------
+
+Hello World!
