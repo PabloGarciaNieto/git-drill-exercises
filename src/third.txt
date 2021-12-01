@@ -112,4 +112,31 @@ git branch
   master
   retrieved/dangling/commit
 
-  
+------------------Checking to retriver branch-------------------
+
+git checkout retrieved/dangling/commit
+Switched to branch 'retrieved/dangling/commit'
+
+git log --oneline
+a367a1c (HEAD -> retrieved/dangling/commit) commit while in detached HEAD
+0cc37fc exercise3 before detached HEAD
+1680561 (tag: exercise3-lightweight-tag, tag: exercise3-annotated-tag) third exercise statement
+d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+------------------Back to branch exercise3 ------------------
+
+git checkout exercise3
+
+git log --oneline
+7f71c3d (HEAD -> exercise3) exercise3 after detached HEAD
+0cc37fc exercise3 before detached HEAD
+1680561 (tag: exercise3-lightweight-tag, tag: exercise3-annotated-tag) third exercise statement
+d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+--------------------Checking refs----------------------
+git show-ref --heads
+8f79396d62dba677873ccead7244dcd39f9c9faf refs/heads/exercise1
+d93d9676c3173889fe5c072ca22645ef1eb00bb4 refs/heads/exercise2
+7f71c3db250cc2bff6d2209ddfb8816c374a54ee refs/heads/exercise3
+d6d711756d12e5076aae8ae488f32181b553095a refs/heads/master
+a367a1c2d7597cb232f3297ddca949706d0cfb00 refs/heads/retrieved/dangling/commit
