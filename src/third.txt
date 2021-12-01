@@ -1,0 +1,142 @@
+----------------Checking value of actual HEAD------------------
+
+cat .git/HEAD
+ref: refs/heads/exercise3
+
+  exercise1
+  exercise2
+* exercise3
+  master
+  
+----------------Checking value of the other heads------------------
+
+git show-ref
+8f79396d62dba677873ccead7244dcd39f9c9faf refs/heads/exercise1
+d93d9676c3173889fe5c072ca22645ef1eb00bb4 refs/heads/exercise2
+16805615d37c4795bf4ec1f4a4001bf2d6142955 refs/heads/exercise3
+d6d711756d12e5076aae8ae488f32181b553095a refs/heads/master   
+7c9a7134f49b2d9dd934c7dd6a3ccd9c03e1acad refs/stash
+
+-------------Master branch pointing at...-------------
+
+git cat-file -p d6d711756d
+tree bf1ac3691c6dcdfc2c5b045135ac4339132c4ac8
+author pablo <> 1638351240 +0100
+committer pablo <> 1638351240 +0100
+
+README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+-------------Exercise3 branch pointing at...-------------
+
+git cat-file -p 16805615  
+tree dfa84430ecb803b46521c8cbfb6ddd152ab20ce4
+parent d6d711756d12e5076aae8ae488f32181b553095a
+author pablo <pgnieto@paradigmadigital.com> 1638357561 +0100   
+committer pablo <pgnieto@paradigmadigital.com> 1638357561 +0100
+
+third exercise statement
+
+---------------Lightweight tag----------------
+
+git tag exercise3-lightweight-tag
+
+git show-ref --tags
+16805615d37c4795bf4ec1f4a4001bf2d6142955 refs/tags/exercise3-lightweight-tag
+
+git tag --points-at 16805615d3
+exercise3-lightweight-tag
+
+-----------Annotated tags---------------
+
+git tag -a "exercise3-annotated-tag" -m "Annotated tag for exercise3" 
+
+git show exercise3-annotated-tag
+tag exercise3-annotated-tag
+Tagger: pablo <pgnieto@paradigmadigital.com>
+Date:   Wed Dec 1 12:44:28 2021 +0100
+
+Annotated tag for exercise3
+
+commit 16805615d37c4795bf4ec1f4a4001bf2d6142955 (HEAD -> exercise3, tag: exercise3-lightweight-tag, tag: exercise3-annotated-tag)
+
+-------------Detached Head--------------
+
+git log --oneline
+0cc37fc (HEAD -> exercise3) exercise3 before detached HEAD
+1680561 (tag: exercise3-lightweight-tag, tag: exercise3-annotated-tag) third exercise statement
+d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+git checkout 0cc37fc
+Note: switching to '0cc37fc'.
+
+You are in 'detached HEAD' state. You can look around, make experimental 
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+cat .git/HEAD
+0cc37fcbe6d3b060522822b696051a364debe940
+
+-----------------Dangling commit----------------------
+
+git commit -m "commit while in detached HEAD"
+[detached HEAD a367a1c] commit while in detached HEAD
+ 1 file changed, 17 insertions(+)
+
+git log --oneline
+a367a1c (HEAD) commit while in detached HEAD
+0cc37fc (exercise3) exercise3 before detached HEAD
+1680561 (tag: exercise3-lightweight-tag, tag: exercise3-annotated-tag) third exercise statement
+d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+git checkout exercise3
+Warning: you are leaving 1 commit behind, not connected to
+any of your branches:
+
+  a367a1c commit while in detached HEAD
+
+If you want to keep it by creating a new branch, this may be a good time
+to do so with:
+
+ git branch <new-branch-name> a367a1c
+
+Switched to branch 'exercise3'
+
+----------------Retrieving dangling commit------------------
+
+git branch retrieved/dangling/commit a367a1c
+
+git branch
+  exercise1
+  exercise2
+* exercise3
+  master
+  retrieved/dangling/commit
+
+------------------Checking to retriver branch-------------------
+
+git checkout retrieved/dangling/commit
+Switched to branch 'retrieved/dangling/commit'
+
+git log --oneline
+a367a1c (HEAD -> retrieved/dangling/commit) commit while in detached HEAD
+0cc37fc exercise3 before detached HEAD
+1680561 (tag: exercise3-lightweight-tag, tag: exercise3-annotated-tag) third exercise statement
+d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+------------------Back to branch exercise3 ------------------
+
+git checkout exercise3
+
+git log --oneline
+7f71c3d (HEAD -> exercise3) exercise3 after detached HEAD
+0cc37fc exercise3 before detached HEAD
+1680561 (tag: exercise3-lightweight-tag, tag: exercise3-annotated-tag) third exercise statement
+d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+--------------------Checking refs----------------------
+git show-ref --heads
+8f79396d62dba677873ccead7244dcd39f9c9faf refs/heads/exercise1
+d93d9676c3173889fe5c072ca22645ef1eb00bb4 refs/heads/exercise2
+7f71c3db250cc2bff6d2209ddfb8816c374a54ee refs/heads/exercise3
+d6d711756d12e5076aae8ae488f32181b553095a refs/heads/master
+a367a1c2d7597cb232f3297ddca949706d0cfb00 refs/heads/retrieved/dangling/commit
