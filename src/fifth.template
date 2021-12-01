@@ -1,3 +1,36 @@
 The name of this file is fifth.txt
 still the same name...
 and still...
+
+---------------Renaming the file----------------
+
+git mv src/fifth.txt src/fifth.template
+
+git status
+On branch exercise5
+  (use "git restore --staged <file>..." to unstage)
+        renamed:    src/fifth.txt -> src/fifth.template
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+
+git add .
+
+git commit -m "file renamed"
+
+------------------Checking when the file was renamed----------------------
+
+git log --name-status --oneline
+2752a9a (HEAD -> exercise5) file renamed
+R100    src/fifth.txt   src/fifth.template
+acb3c69 and still...
+M       src/fifth.txt
+f5b2437 still original file name
+M       src/fifth.txt
+75e6179 original file name => fifth.txt
+M       src/fifth.txt
+3e0b6f2 fifth exercise statement
+A       Exercise5-HistoryAndDiffs.md
+A       src/fifth.txt
+d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+A       README.md
