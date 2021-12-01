@@ -50,4 +50,4 @@ git log --graph
 
 -------------------Setting up for conflict---------------------
 
-Hello World!
+Hola World!
