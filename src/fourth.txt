@@ -50,5 +50,94 @@ git log --graph
 
 -------------------Setting up for conflict---------------------
 
+git branch
+  exercise1
+  exercise2
+  exercise3
+* exercise4
+  joe
+  master
+  retrieved/dangling/commit
+
+Hello World!
+
+git checkout -b joe
+Switched to a new branch 'joe'
+
+Hello Joe!
+
+git commit -m "Hello Joe"
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+git checkout exercise4
+Switched to branch 'exercise4'
+
+Hola World!
+
+git add .
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+-------------------enable git rerere---------------------
+
+git config rerere.enabled true
+Auto-merging src/fourth.txt
+Recorded preimage for 'src/fourth.txt'
+Automatic merge failed; fix conflicts and then commit the result.
+
+git add .
+
 Hola Joe!
 
+git commit -m "Hola Joe! manual merge"
+Recorded resolution for 'src/fourth.txt'.
+[exercise4 77017cf] Hola Joe! manual merge
+
+--------setting HEAD before merging----------------
+
+git reset --hard HEAD^
+HEAD is now at 720b56c Hola World!
+
+
+Hello World!
+
+-------------New merge using previous resolution thanks to rerere----------------------
+
+git merge joe
+Auto-merging src/fourth.txt
+CONFLICT (content): Merge conflict in src/fourth.txt
+Resolved 'src/fourth.txt' using previous resolution.
+Automatic merge failed; fix conflicts and then commit the result.
+
+Hola Joe!
+
+git add .
+git commit -m "Hola Joe! after automatic merge conflict solution(rerere)"
+[exercise4 fe78c79] Hola Joe! after automatic merge conflict solution(rerere)
+
+git log --oneline
+fe78c79 (HEAD -> exercise4) Hola Joe! after automatic merge conflict solution(rerere)
+720b56c Hola World!
+2e4992f (joe) Hello Joe!
+962a59b setting up for conflict
+b6978b4 Merge branch 'exercise3' into exercise4
+83fc95f add fourth exercise statement
+40e9c24 (exercise3) third exercise completed
+7f71c3d exercise3 after detached HEAD
+0cc37fc exercise3 before detached HEAD
+1680561 (tag: exercise3-lightweight-tag, tag: exercise3-annotated-tag) third exercise statement
+d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+
+git checkout joe
+Switched to branch 'joe'
+
+git log --oneline
+2e4992f (HEAD -> joe) Hello Joe!
+962a59b setting up for conflict
+b6978b4 Merge branch 'exercise3' into exercise4
+83fc95f add fourth exercise statement
+40e9c24 (exercise3) third exercise completed
+7f71c3d exercise3 after detached HEAD
+0cc37fc exercise3 before detached HEAD
+1680561 (tag: exercise3-lightweight-tag, tag: exercise3-annotated-tag) third exercise statement
+d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
