@@ -59,3 +59,57 @@ Annotated tag for exercise3
 
 commit 16805615d37c4795bf4ec1f4a4001bf2d6142955 (HEAD -> exercise3, tag: exercise3-lightweight-tag, tag: exercise3-annotated-tag)
 
+-------------Detached Head--------------
+
+git log --oneline
+0cc37fc (HEAD -> exercise3) exercise3 before detached HEAD
+1680561 (tag: exercise3-lightweight-tag, tag: exercise3-annotated-tag) third exercise statement
+d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+git checkout 0cc37fc
+Note: switching to '0cc37fc'.
+
+You are in 'detached HEAD' state. You can look around, make experimental 
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+cat .git/HEAD
+0cc37fcbe6d3b060522822b696051a364debe940
+
+-----------------Dangling commit----------------------
+
+git commit -m "commit while in detached HEAD"
+[detached HEAD a367a1c] commit while in detached HEAD
+ 1 file changed, 17 insertions(+)
+
+git log --oneline
+a367a1c (HEAD) commit while in detached HEAD
+0cc37fc (exercise3) exercise3 before detached HEAD
+1680561 (tag: exercise3-lightweight-tag, tag: exercise3-annotated-tag) third exercise statement
+d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+git checkout exercise3
+Warning: you are leaving 1 commit behind, not connected to
+any of your branches:
+
+  a367a1c commit while in detached HEAD
+
+If you want to keep it by creating a new branch, this may be a good time
+to do so with:
+
+ git branch <new-branch-name> a367a1c
+
+Switched to branch 'exercise3'
+
+----------------Retrieving dangling commit------------------
+
+git branch retrieved/dangling/commit a367a1c
+
+git branch
+  exercise1
+  exercise2
+* exercise3
+  master
+  retrieved/dangling/commit
+
+  
