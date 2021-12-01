@@ -79,6 +79,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 
 ----------------Stash your Changes-----------------
+
 git stash save --include-untracked
 Saved working directory and index state WIP on exercise2: a178077 add exercise2 statement
 
@@ -86,12 +87,18 @@ git status
 On branch exercise2
 nothing to commit, working tree clean
 
+----------------Show stashed changes-----------------
+
 git stash list
 stash@{0}: WIP on exercise2: a178077 add exercise2 statemen
+
+----------------Show stashed changes in detail-----------------
 
 git stash show
  src/secont.txt | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 64 insertions(+)
+
+----------------Retrieving (applying) stashed changes-----------------
 
 git stash apply stash@`{0`} 
 On branch exercise2
