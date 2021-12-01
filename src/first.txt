@@ -1,1 +1,27 @@
 Hello World!
+------------------------
+tree .git
+Listado de rutas de carpetas para el volumen Windows 
+El número de serie del volumen es 0000000F F4D3:4F9C
+C:\USERS\PGNIETO\DESKTOP\GIT-DRILL\.GIT
+├───hooks
+├───info
+├───logs
+│   └───refs
+│       └───heads
+├───objects
+│   ├───31
+│   ├───59
+│   ├───5d
+│   ├───75
+│   ├───92
+│   ├───ae
+│   ├───bf
+│   ├───c5
+│   ├───ce
+│   ├───d6
+│   ├───info
+│   └───pack
+└───refs
+    ├───heads
+    └───tags
