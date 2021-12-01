@@ -34,3 +34,77 @@ A       Exercise5-HistoryAndDiffs.md
 A       src/fifth.txt
 d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
 A       README.md
+
+////////////
+after another commit
+///////////
+git log --name-status --oneline
+5d24266 (HEAD -> exercise5) second commit after renaming
+M       src/fifth.template
+2752a9a file renamed
+R100    src/fifth.txt   src/fifth.template
+acb3c69 and still...
+M       src/fifth.txt
+f5b2437 still original file name
+M       src/fifth.txt
+75e6179 original file name => fifth.txt
+M       src/fifth.txt
+3e0b6f2 fifth exercise statement
+A       Exercise5-HistoryAndDiffs.md
+A       src/fifth.txt
+d6d7117 (master) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+A       README.md
+
+-----------------Tracking down commits with --grep--------------------------
+
+git log --grep=still --oneline
+acb3c69 and still...
+f5b2437 still original file name
+
+-----------------Tracking down commits where a file was renamed --diff-filter=R --------------------------
+
+git log  --diff-filter=R
+commit 2752a9a133c0911022fa6ab24e23a982199e8754
+Author: pablo <pgnieto@paradigmadigital.com>
+Date:   Wed Dec 1 15:57:05 2021 +0100
+
+    file renamed
+
+-----------------Tracking down commits where the content of a file was modified --diff-filter=M --------------------------
+
+git log --diff-filter=M --oneline
+5d24266 (HEAD -> exercise5) second commit after renaming
+acb3c69 and still...
+f5b2437 still original file name
+75e6179 original file name => fifth.txt
+PS C:\Users\pgnieto\Desktop\git-drill>
+
+-------------------------Git show to see what happened in a commit ---------------------------
+
+git show acb3c69
+commit acb3c697fb0589e3267066c8e6420b31bcb01c53
+Author: pablo <pgnieto@paradigmadigital.com>
+Date:   Wed Dec 1 15:53:40 2021 +0100
+
+    and still...
+
+diff --git a/src/fifth.txt b/src/fifth.txt
+index 2897549..3030685 100644
+--- a/src/fifth.txt
++++ b/src/fifth.txt
+@@ -1,2 +1,3 @@
+ The name of this file is fifth.txt
+-still the same name...
++still the same name...^M
++and still...
+
+-------------------Check which branches are't merged with master-----------------
+
+git branch --no-merged master
+  exercise1
+  exercise2
+  exercise3
+  exercise4
+* exercise5
+  joe
+  retrieved/dangling/commit
