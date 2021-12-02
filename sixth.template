@@ -1,6 +1,6 @@
-------------Fixing mistakes-----------------
+------------Fixing mistakes With untracked files-----------------
 
-////With untracked files check out to the last committed version of the file
+//// check out to the last committed version of the file
 
 cat sixth.txt
 ------------Fixing mistakes-----------------
@@ -9,9 +9,9 @@ Bad data
 git checkout -- sixth.txt
 
 cat sixth.txt
-------------Fixing mistakes-----------------
+------------Fixing mistakes With staged changes-----------------
 
-///With staged changes restore the stage area and then checkout like above
+/// restore the stage area and then checkout like above
 
 cat sixth.txt
 ------------Fixing mistakes-----------------
@@ -32,4 +32,220 @@ git checkout -- sixth.txt // Now it works!
 cat sixth.txt    
 ------------Fixing mistakes-----------------
    
-Previous to change file name 
+*/Previous to change file name/*
+
+git log --name-status --follow --oneline sixth.template // Find when was changed the file name
+222dd48 (HEAD -> exercise6) new file name = sixth.template
+R100    sixth.txt       sixth.template
+8e422f7 previous to change file name
+M       sixth.txt
+562a7c1 first part of fixing mistakes
+M       sixth.txt
+8b06688 add title
+M       sixth.txt
+06a6213 sixth exercise statement
+A       sixth.txt
+
+-------------------------More git checkout------------------------------
+// I want to go back before the name change, and remove sixth.template------------------------
+
+git checkout 8e422f7 -- sixth.txt// the working and staging area retrieve the .txt file
+
+git reset HEAD sixth.txt// I reset the staging area, just want the .txt file in the working area not in the staging
+
+git rm sixth.template// I delete the .template file
+rm 'sixth.template'
+
+git status
+On branch exercise6
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    sixth.template //////// this is caused by the above: git checkout 8e422f7 -- sixth.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        sixth.txt ///////// this is caused by the above: git reset HEAD sixth.txt
+
+git commit -m "deleting sixth.template file" 
+[exercise6 d1b3271] deleting sixth.template file
+ 1 file changed, 35 deletions(-)
+ delete mode 100644 sixth.template
+// So sixth.template was removed, and sixth.txt is in the working area but not tracked//
+
+// Now I think removing sixth.template was a bad idea, and want to bring it back------------------------
+
+git log --diff-filter=D --oneline -- sixth.template// I find when was deleted
+d1b3271 (HEAD -> exercise6) deleting sixth.template file
+
+git checkout d1b3271^ -- sixth.template// I retrive the working and the staging area of the commit before the deleting using the caret (^) syntax
+
+git status
+On branch exercise6
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   sixth.template
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        sixth.txt
+
+// Now sixth.template is back in the working and staging area, and sixth.txt is still untracked//
+
+--------------Clean the repo------------------
+
+git clean --dry-run
+Would remove sixth.txt
+git clean -f       
+Removing sixth.txt
+// There's sixth.txt no more//
+
+---------------------Git reset------------------------------------------------------------------------------------------
+// sixth.template is staged but not commited yet
+git status
+On branch exercise6
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   sixth.template     
+
+// I decide not commit it, so I'm goint to unstaging it
+git reset -- sixth.template
+
+git status
+On branch exercise6
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        sixth.template
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+// So I'm still in the commit where sixth.template was deleted, but exist in the working area
+git log -3 --oneline
+d1b3271 (HEAD -> exercise6) deleting sixth.template file
+222dd48 new file name = sixth.template
+8e422f7 previous to change file name
+
+// I remove the untracked file 
+rm sixth.template  
+
+cat sixth.template
+cat : No se encuentra la ruta de acceso 'C:\Users\pgnieto\Desktop\git-drill\sixth.template' porque no existe.
+// sixth.template kaput//
+
+// I change my mind again and want sixth.template back------------------
+
+git log -2 --oneline
+d1b3271 (HEAD -> exercise6) deleting sixth.template file
+222dd48 new file name = sixth.template
+
+git reset 222dd48 -- sixth.template
+Unstaged changes after reset:
+D       sixth.template  
+
+git status
+On branch exercise6
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   sixth.template
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)        
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    sixth.template
+
+//But git reset(--mixed, is the default) won't update the working area.
+cat sixth.template
+cat : No se encuentra la ruta de acceso 'C:\Users\pgnieto\Desktop\git-drill\sixth.template' porque no existe.
+
+//But its not a problem because is back in the staging and I could commit the file back into my repository if I wanted to.
+
+// Other scenario, let's say I really screwed something up,
+//and want to reset everything (the working area and the staging area)
+//back to the latest commit I made, and get rid of sixth.template again.
+
+//Warning: this will overwrite tracked files and could cause to lose work
+
+git reset --hard HEAD
+HEAD is now at d1b3271 deleting sixth.template file
+// Now I got rid of sixth.template
+
+---------------------------------------------------------------------------------
+
+//Other scenario: What happens if I make a mistake using `git reset`?
+//Git keeps a copy of my `HEAD` in a variable called `ORIG_HEAD`,
+//to help me get back to where I want to be.
+
+// Reset the repo back to: 222dd48 new file name = sixth.template
+
+git reset 222dd48
+Unstaged changes after reset:
+D       sixth.template
+
+git status
+On branch exercise6
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    sixth.template
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+git log -1 --oneline
+222dd48 (HEAD -> exercise6) new file name = sixth.template// Oh no!!! sixth.template is back on business
+
+git reset ORIG_HEAD
+
+git log -1 --oneline
+d1b3271 (HEAD -> exercise6) deleting sixth.template file// Safe and sound back to the commit where I deleted sixth.template.
+
+------------------------Git revert-------------------------------
+
+// Now I want to undo deleting sixth.template,
+//but don't want to alter history,
+//because I'm working with collaborators in a shared remote repo.
+
+git log -1 --oneline
+d1b3271 (HEAD -> exercise6) deleting sixth.template file
+
+git revert d1b3271
+hint: Waiting for your editor to close the file... 
+[exercise6 9ab794d] Revert "deleting sixth.template file"
+ 1 file changed, 35 insertions(+)
+ create mode 100644 sixth.template
+
+git status
+On branch exercise6
+nothing to commit, working tree clean
+
+git log -3 --oneline
+9ab794d (HEAD -> exercise6) Revert "deleting sixth.template file"
+d1b3271 deleting sixth.template file
+222dd48 new file name = sixth.template
+
+git status
+On branch exercise6
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   sixth.template
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+git log --oneline   
+9ab794d (HEAD -> exercise6) Revert "deleting sixth.template file"
+d1b3271 deleting sixth.template file
+222dd48 new file name = sixth.template
+8e422f7 previous to change file name
+
+// Now 9ab794d (HEAD -> exercise6) Revert "deleting sixth.template file" = 222dd48 new file name = sixth.template
+// I successfully brought sixth.template back from the dead, and I have a revert commit to show others exactly what happened.
+//Plus, I didn't have to change history, 
+//so this is a good method to use if the changes you want to revert have already been pushed to your origin.
+
+
+
+
+
+
+
+
+
