@@ -32,4 +32,4 @@ git checkout -- sixth.txt // Now it works!
 cat sixth.txt    
 ------------Fixing mistakes-----------------
    
-   
+Previous to change file name 
