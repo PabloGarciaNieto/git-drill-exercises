@@ -1,0 +1,35 @@
+------------Fixing mistakes-----------------
+
+////With untracked files check out to the last committed version of the file
+
+cat sixth.txt
+------------Fixing mistakes-----------------
+Bad data
+
+git checkout -- sixth.txt
+
+cat sixth.txt
+------------Fixing mistakes-----------------
+
+///With staged changes restore the stage area and then checkout like above
+
+cat sixth.txt
+------------Fixing mistakes-----------------
+Badd data!!!!!!!!
+
+git add sixth.txt //File staged
+
+git checkout -- sixth.txt //don't work cause the change is staged
+
+cat sixth.txt            
+------------Fixing mistakes-----------------
+Badd data!!!!!!!!
+
+git restore --staged sixth.txt // No staged changes
+
+git checkout -- sixth.txt // Now it works!
+
+cat sixth.txt    
+------------Fixing mistakes-----------------
+   
+Previous to change file name 
