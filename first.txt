@@ -15,13 +15,13 @@ git commit -m "Change title of first.txt and delete second.txt file"
 [exercise7 f1de2b3] Change title of first.txt and delete second.txt file
  1 file changed, 1 deletion(-)
  delete mode 100644 second.txt
-// After commit changes I'm aware I didn't add the new title to first.txt
+// After commit changes I'm aware I didn't add the new title to first.txt-------------------------
 
-//... change the title
+//... change the title--------------------------
 git add . //staging the changes
 
 git commit --amend // create a new commit combining its changes with the ones of the previous commit
-// and uses the commit message of the former commit
+// and uses the commit message of the former commit----------------------------------
 [exercise7 a28aecc] Change title of first.txt and delete second.txt file
  Date: Tue Dec 7 13:46:42 2021 +0100
  2 files changed, 1 insertion(+), 2 deletions(-)
@@ -34,6 +34,7 @@ d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual o
 New title!
 
 ------------Git rebase-------------
+
 git checkout exercise7-2
 Switched to branch 'exercise7-2'
 
@@ -64,3 +65,49 @@ b19849e (HEAD -> exercise7) second.txt comes back
 a28aecc Change title of first.txt and delete second.txt file
 86d0f31 seventh exercise stament
 d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+----------------Git rebase interactive (in the same branch, just between commits)--------------------
+
+git checkout exercise7-2
+Switched to branch 'exercise7-2'
+
+echo "Hello world!" >> second.txt
+
+git add .
+
+git commit -m "add hello world to second.txt"
+[exercise7-2 f54a51a] add hello world to second.txt
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+echo "Bye world!" >> second.txt
+
+git add .
+
+git commit -m "add By World to second.txt"
+[exercise7-2 aa9af5d] add By World to second.txt
+
+git log --oneline
+aa9af5d (HEAD -> exercise7-2) add By World to second.txt
+f54a51a add hello world to second.txt
+86d0f31 seventh exercise stament
+d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+//I'm going to squash f54a51a and aa9af5d in one commit-----------------
+
+
+git rebase -i 86d0f31 //rebase from the parent of the commit I want to squash------------------
+[detached HEAD 568e515] add Hello World! and By World! to second.txt
+ Date: Tue Dec 7 14:40:13 2021 +0100
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+[detached HEAD 29e2ae8] add Hello World! and By World! to second.txt
+ Date: Tue Dec 7 14:40:13 2021 +0100
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+Successfully rebased and updated refs/heads/exercise7-2.
+
+git log --oneline    
+29e2ae8 (HEAD -> exercise7-2) add Hello World! and By World! to second.txt
+86d0f31 seventh exercise stament
+d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+git checkout exercise7
+Switched to branch 'exercise7'
