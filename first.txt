@@ -1,1 +1,35 @@
+first.txt
+
+--------------Git ammend---------------
+
+git rm second.txt // secon.txt is removed
+rm 'second.txt'
+
+git status
+On branch exercise7
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    second.txt
+
+git commit -m "Change title of first.txt and delete second.txt file" 
+[exercise7 f1de2b3] Change title of first.txt and delete second.txt file
+ 1 file changed, 1 deletion(-)
+ delete mode 100644 second.txt
+// After commit changes I'm aware I didn't add the new title to first.txt
+
+//... change the title
+git add . //staging the changes
+
+git commit --amend // create a new commit combining its changes with the ones of the previous commit
+// and uses the commit message of the former commit
+[exercise7 a28aecc] Change title of first.txt and delete second.txt file
+ Date: Tue Dec 7 13:46:42 2021 +0100
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+ delete mode 100644 second.txt
+
+git log --oneline
+a28aecc (HEAD -> exercise7) Change title of first.txt and delete second.txt file86d0f31 (exercise7-2) seventh exercise stament
+d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
 New title!
+
