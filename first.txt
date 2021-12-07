@@ -33,3 +33,34 @@ d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual o
 
 New title!
 
+------------Git rebase-------------
+git checkout exercise7-2
+Switched to branch 'exercise7-2'
+
+git rebase exercise7
+Successfully rebased and updated refs/heads/exercise7-2.
+
+git log --oneline       
+52e4263 (HEAD -> exercise7-2, exercise7) end of ----git amend---- part
+a28aecc Change title of first.txt and delete second.txt file
+86d0f31 seventh exercise stament
+d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+git checkout exercise7
+Switched to branch 'exercise7'
+
+echo "second.txt comes back!" > second.txt
+
+git add .
+
+git commit -m "second.txt comes back"
+[exercise7 b19849e] second.txt comes back
+ 2 files changed, 12 insertions(+)
+ create mode 100644 second.txt
+ 
+git log --oneline
+b19849e (HEAD -> exercise7) second.txt comes back
+52e4263 (exercise7-2) end of ----git amend---- part
+a28aecc Change title of first.txt and delete second.txt file
+86d0f31 seventh exercise stament
+d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
