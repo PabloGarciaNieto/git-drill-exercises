@@ -1,2 +1,53 @@
 Tutorial
 Lorem
+----------------------Grepping with Git------------------------------------------------------
+
+git grep -e "Tutorial"
+first.txt:Tutorial
+second.txt:git Tutorial
+
+
+//---To have matches broken up with line numbers and grouped by file
+
+git grep --line-number --heading --break -e "Tutorial"
+first.txt
+1:Tutorial
+
+second.txt
+2:git Tutorial
+
+
+//---If I make a change in the working area, and use `git grep` again.
+//Because `second.txt` is tracked, `git grep` will pick up the change.
+
+(initial second.txt content)
+Bla Bla
+git Tutorial
+bla bla
+
+(second.txt content after the change)
+Bla Bla
+git Tutorial
+bla bla
+Fun Tutorial
+
+git grep --line-number -e "Tutorial"
+first.txt:1:Tutorial
+second.txt:2:git Tutorial
+second.txt:4:Fun Tutorial
+
+//If I try `git grep --cached` - this will only search the version in the staging area, so the new change will be ignored.
+
+git grep --line-number --cached -e "Tutorial"
+first.txt:1:Tutorial
+second.txt:2:git Tutorial
+(there's no line 4)
+
+//If I stage the file and try again.
+
+git add second.txt
+git grep --line-number --cached -e "Tutorial"
+first.txt:1:Tutorial
+second.txt:2:git Tutorial
+second.txt:4:Fun Tutorial
+(now there it is!)
