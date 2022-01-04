@@ -51,3 +51,42 @@ first.txt:1:Tutorial
 second.txt:2:git Tutorial
 second.txt:4:Fun Tutorial
 (now there it is!)
+
+---------------------------Cherry picking-----------------------------
+
+//When there's changes in a specific commit in another branch that I'd like to bring into my current branch,
+//without merging everything from the other branch.
+
+git checkout cherry-branch 
+Switched to branch 'cherry-branch'
+
+git log --oneline
+2ed9f07 (HEAD -> cherry-branch) second commit of the cherry-branch
+251fe07 first commit of the cherry-branch
+4bb726f (exercise9) git grep use
+429a490 add file second.txt
+0189018 add file first.txt
+e87cae8 ninth exercise statement
+d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+
+//The commit I'm looking for is `251fe07` in this copy of the repo.
+//Then I checkout to `exercise9` branch, and cherry-pick it.
+
+git checkout exercise9
+
+git cherry-pick 251fe07
+[exercise9 5d14c29] first commit of the cherry-branch
+ Date: Tue Jan 4 16:25:35 2022 +0100
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+git log --oneline      
+5d14c29 (HEAD -> exercise9) first commit of the cherry-branch
+4bb726f git grep use
+429a490 add file second.txt
+0189018 add file first.txt
+e87cae8 ninth exercise statement
+d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+//Now the commit "first commit of the cherry-branch" was merged into my branch `exercise9`.
+//Noticed the cherry-picked commit is on top - unlike if I had rebased my other changes on top of it.
