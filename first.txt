@@ -90,3 +90,48 @@ d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual o
 
 //Now the commit "first commit of the cherry-branch" was merged into my branch `exercise9`.
 //Noticed the cherry-picked commit is on top - unlike if I had rebased my other changes on top of it.
+
+--------------------------------------Git blame------------------------------------------------------
+
+//I can use it when I want to know who was the last person to touch the code of a file.
+
+git blame second.txt
+429a4900 (pablo 2022-01-04 15:08:14 +0100 1) Bla Bla
+429a4900 (pablo 2022-01-04 15:08:14 +0100 2) git Tutorial
+4bb726fb (pablo 2022-01-04 15:54:30 +0100 3) bla bla
+5d14c293 (pablo 2022-01-04 16:25:35 +0100 4) Fun Tutorial
+5d14c293 (pablo 2022-01-04 16:25:35 +0100 5) Not so fun at the end
+
+//git blame also accepts line numbers or regular expressions,
+//if you want to limit your blaming to a range of lines or specific function,
+//rather than blaming the entire file.
+
+git blame -L 2,3 second.txt
+429a4900 (pablo 2022-01-04 15:08:14 +0100 2) git Tutorial
+4bb726fb (pablo 2022-01-04 15:54:30 +0100 3) bla bla
+
+//------I can blame files even if they are deleted----------------
+
+//let's create a file---------------
+echo "console.log('git drill');" >> script.js
+
+//let's delete it--------------
+git rm script.js
+rm 'script.js'
+git add .
+git commit -m "script.js file removed"
+[exercise9 57fa7b6] script.js file removed
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 script.js
+
+//Let's find the commit where script.js was deleted-----------
+git log --diff-filter=D -- script.js     
+commit 57fa7b65dd34602f3b635cd8af9bde109357f05d (HEAD -> exercise9)
+Author: pablo <pgnieto@paradigmadigital.com>
+Date:   Wed Jan 5 13:36:43 2022 +0100
+
+    script.js file removed
+
+//let's git blame it from one commit before then (using the ^ syntax)----------
+git blame 57fa7b65dd34602f3b635cd8af9bde109357f05d^ -- script.js
+670f9801 (pablo 2022-01-05 13:27:51 +0100 1) <FF><FE>console.log('git drill');
