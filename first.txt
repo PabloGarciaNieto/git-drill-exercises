@@ -135,3 +135,105 @@ Date:   Wed Jan 5 13:36:43 2022 +0100
 //let's git blame it from one commit before then (using the ^ syntax)----------
 git blame 57fa7b65dd34602f3b635cd8af9bde109357f05d^ -- script.js
 670f9801 (pablo 2022-01-05 13:27:51 +0100 1) <FF><FE>console.log('git drill');
+
+-----------------------------------------Git bisect-------------------------------------------------
+
+//git bisect is a useful function for determining where in history something changed. 
+//Maybe a bug was introduced last month,
+//but going through every commit since then would be too time-consuming.
+//Say I want to find out where the line "Not so fun at the end" was added to my `second.txt` file.
+//First I need to know a commit range - I know it's present in my current commit,
+//and I know it wasn't before the commit where the file was created,
+//so let's start a `git bisect` session with those start and end points:
+
+git log --oneline
+ce92231 (HEAD -> exercise9) git blame use//Current commit---------
+57fa7b6 script.js file removed
+670f980 add script.js file
+ce570cb git cherry-pick use
+5d14c29 first commit of the cherry-branch
+4bb726f git grep use
+429a490 add file second.txt//File creation commit--------------
+0189018 add file first.txt
+e87cae8 ninth exercise statement
+d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+//Git is going to move backward in time from one commit to the other
+git bisect start ce92231 429a490
+Bisecting: 2 revisions left to test after this (roughly 2 steps)
+[ce570cbcfa116e1583e5dd342fac6a512cf1a43b] git cherry-pick use
+
+//Let's check the file...
+cat second.txt
+Bla Bla
+git Tutorial
+bla bla
+Fun Tutorial
+Not so fun at the end
+
+//The line "Not so fun at the end" is there, so I mark this as Bad. Git now moves backward in time...
+
+git bisect bad
+Bisecting: 0 revisions left to test after this (roughly 1 step)
+[5d14c293135018bc2df284c1871992388e908054] first commit of the cherry-branch
+
+cat second.txt
+Bla Bla
+git Tutorial
+bla bla
+Fun Tutorial
+Not so fun at the end
+
+//The line is there, so I mark this as Bad. Git now moves backward in time...
+
+git bisect bad
+Bisecting: 0 revisions left to test after this (roughly 0 steps)
+[4bb726fb26aa427a76d6fecf0ab7f663bfb476f5] git grep use
+
+cat second.txt
+Bla Bla
+git Tutorial
+bla bla
+Fun Tutorial
+
+//The line is not there!, So I mark this as good.
+
+git bisect good
+5d14c293135018bc2df284c1871992388e908054 is the first bad commit
+commit 5d14c293135018bc2df284c1871992388e908054
+Author: pablo <pgnieto@paradigmadigital.com>
+Date:   Tue Jan 4 16:25:35 2022 +0100
+
+    first commit of the cherry-branch
+
+ second.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+//git bisect has helped me figure out that the offending line was introduced in the `5d14c2...` commit.
+
+git log --oneline               
+4bb726f (HEAD, refs/bisect/good-4bb726fb26aa427a76d6fecf0ab7f663bfb476f5) git grep use
+429a490 (refs/bisect/good-429a490058fe23c27c49eff5f47ccedd2b0aa02f) add file second.txt
+0189018 add file first.txt
+e87cae8 ninth exercise statement
+d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
+
+//To reset the HEAD to where it was before I start bisecting-------------
+git bisect reset
+Previous HEAD position was 4bb726f git grep use
+Switched to branch 'exercise9'
+
+//Observe that while bisecting the HEAD was detached,
+//so I had to stop bisecting in order to point the HEAD again to my current branch
+
+git log --oneline
+ce92231 (HEAD -> exercise9) git blame use
+57fa7b6 script.js file removed
+670f980 add script.js file
+ce570cb git cherry-pick use
+5d14c29 first commit of the cherry-branch//So this is the first bad commit in relation to my search
+4bb726f git grep use
+429a490 add file second.txt
+0189018 add file first.txt
+e87cae8 ninth exercise statement
+d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
