@@ -92,8 +92,9 @@ f54a51a add hello world to second.txt
 86d0f31 seventh exercise stament
 d6d7117 (origin/main, main) README of Nina Zakharenko creator and intellectual owner of the exercises of this repo
 
-//I'm going to squash f54a51a and aa9af5d in one commit-----------------
-
+//I'm going to squash aa9af5d on f54a51a in one commit-----------------
+//-- pick f54a51a add hello world to second.txt --
+//-- squash aa9af5d add By World to second.txt --
 
 git rebase -i 86d0f31 //rebase from the parent of the commit I want to squash------------------
 [detached HEAD 568e515] add Hello World! and By World! to second.txt
